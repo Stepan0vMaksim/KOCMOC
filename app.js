@@ -64,7 +64,11 @@ async function activateAdmin(){
 }
 async function start(){
  try{
-  let c;if(window.frameElement?.hasAttribute('data-cms-preview'))c=clone(parent.KosmosCMS.previewData);else{const res=await fetch('./content.json?v='+Date.now(),{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);c=await res.json();}window.KosmosCMS.content=c;const prepared=prepareContent(c);applyStatic(prepared);initKosmos(prepared);
+  let c;if(window.frameElement?.hasAttribute('data-cms-preview'))c=clone(parent.KosmosCMS.previewData);else{
+   for(let n=0;n<3&&!c;n++)try{const res=await fetch('./content.json?v='+Date.now(),{cache:'no-store',signal:AbortSignal.timeout(8000)});if(!res.ok)throw Error('HTTP '+res.status);c=validateContent(await res.json());try{localStorage.setItem('kosmos-content-cache-v1',JSON.stringify(c))}catch(e){} }catch(e){if(n<2)await new Promise(r=>setTimeout(r,300*(n+1)));}
+   if(!c)try{c=validateContent(JSON.parse(localStorage.getItem('kosmos-content-cache-v1')))}catch(e){}
+   if(!c)throw Error('Не удалось получить content.json');
+  }window.KosmosCMS.content=c;const prepared=prepareContent(c);applyStatic(prepared);initKosmos(prepared);
   if(!window.frameElement?.hasAttribute('data-cms-preview')){window.addEventListener('hashchange',activateAdmin);activateAdmin();}
  }catch(e){const box=document.createElement('div');box.setAttribute('role','alert');box.style.cssText='position:fixed;inset:20px;z-index:9999;background:#0b0816;color:white;padding:24px';box.textContent='Не удалось загрузить сайт. '+e.message+' ';const b=document.createElement('button');b.textContent='Повторить';b.onclick=()=>location.reload();box.append(b);document.body.append(box);}
 }
