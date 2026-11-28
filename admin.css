@@ -21,3 +21,15 @@
 #cms-admin .hint{border-left:3px solid #ffc629;background:#21192f;border-radius:0 8px 8px 0;padding:10px 12px;line-height:1.5}
 #cms-admin .status:not(:empty){color:#ffe494}
 @media(max-width:540px){#cms-admin header>.row:first-child{justify-content:space-between}#cms-admin header>.row:first-child h2{flex:1 0 100%;font-size:18px}#cms-admin nav{padding:8px 0}#cms-admin .cms-actions button{min-height:44px}#cms-admin main>button.add{width:100%}}
+#cms-admin .cms-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;overflow:visible;padding:0}
+#cms-admin .cms-actions button{width:100%;min-height:46px}
+#cms-admin .cms-actions button.pick{border-color:#a77aff;background:#31204c;font-weight:700!important}
+#cms-admin .cms-more{margin:8px 0 0;padding:0;border:0;background:transparent}
+#cms-admin .cms-more>summary{display:inline-block;border:1px solid #675280;border-radius:8px;padding:7px 12px;color:#d5c1ff;font-size:13px;list-style:none}
+#cms-admin .cms-more>summary::-webkit-details-marker{display:none}
+#cms-admin .cms-more>button{margin:8px 8px 0 0}
+#cms-admin header:has(.cms-more[open]){position:relative}
+#cms-admin summary{min-height:0!important;padding:10px 32px 10px 0!important;font-size:16px!important;text-align:left}
+#cms-admin summary::after{right:6px;font:700 20px Arial,sans-serif!important}
+#cms-admin .cms-more>summary{padding:8px 12px!important}
+#cms-admin .cms-more>summary::after{content:none!important}
