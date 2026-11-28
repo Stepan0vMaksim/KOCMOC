@@ -1,5 +1,13 @@
 'use strict';
 const clone=value=>JSON.parse(JSON.stringify(value));
+document.addEventListener('error',e=>{
+ const img=e.target;
+ if(!(img instanceof HTMLImageElement)||!img.src.includes('/assets/content/')||Number(img.dataset.loadRetry)>=2)return;
+ const n=Number(img.dataset.loadRetry||0)+1;
+ img.dataset.loadRetry=String(n);
+ setTimeout(()=>{const url=new URL(img.src);url.searchParams.set('retry',String(n));img.src=url.href;},n*400);
+},true);
+document.addEventListener('load',e=>{if(e.target instanceof HTMLImageElement)delete e.target.dataset.loadRetry;},true);
 function cleanHTML(html){
  const d=new DOMParser().parseFromString(html,'text/html');
  const tags=new Set('P BR STRONG B EM I U H1 H2 H3 H4 H5 H6 UL OL LI TABLE THEAD TBODY TR TD TH BLOCKQUOTE A SPAN DIV SUP SUB HR'.split(' '));
@@ -500,7 +508,7 @@ var VIEWS={
  price:function(){
   var h='<h3>Прайс</h3><p class="lead">Стоимость услуг по залам.</p>';
   ["sun","moon","earth"].forEach(function(k){var x=HALLS[k];
-   h+='<div class="psec"><h4>'+x.title+'</h4><div class="pgrid">'+x.prices.map(function(p){return'<div><span>'+p[1]+'<small>'+p[2]+(p[3]?' · '+p[3]:'')+'</small></span><strong>'+p[0]+'</strong></div>'}).join("")+'</div>'+(k==="sun"?'<div class="note">Занятие с тренером оплачивается дополнительно.</div>':"")+'</div>'});
+   h+='<div class="psec" data-hall="'+k+'"><h4>'+x.title+'</h4><div class="pgrid">'+x.prices.map(function(p){return'<div><span>'+p[1]+'<small>'+p[2]+(p[3]?' · '+p[3]:'')+'</small></span><strong>'+p[0]+'</strong></div>'}).join("")+'</div>'+(k==="sun"?'<div class="note">Занятие с тренером оплачивается дополнительно.</div>':"")+'</div>'});
   h+='<div class="psec"><h4>Другие услуги</h4><div class="pgrid"><div><span>Персональная тренировка<small>в тренажёрном зале</small></span><strong class="ask">по запросу</strong></div><div><span>Мини-группа<small>до 3 человек, в тренажёрном зале</small></span><strong class="ask">по запросу</strong></div></div></div>';
   return h+'<div class="mrow"><button class="mbtn g" type="button" data-page="rules">Документы</button>'+bookBtn()+'</div>'}
 };
