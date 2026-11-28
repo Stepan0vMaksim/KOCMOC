@@ -236,7 +236,9 @@ for(var k=0;k<46;k++){var d=document.createElement("i");d.style.left=Math.random
 
 // просмотр фото
 var lb=document.getElementById("lb"),lbi=lb.querySelector("img"),cur=0,ALT=C.data.ALT,LBL=[];
-function show(i){if(!LBL.length)return;cur=(i+LBL.length)%LBL.length;lbi.src=LBL[cur].src;lbi.alt=LBL[cur].alt;document.getElementById("cnt").textContent=(cur+1)+" / "+LBL.length}
+var galleryCache=new Map();
+function warm(i){if(LBL.length<2)return;var src=LBL[(i+LBL.length)%LBL.length].src;if(!galleryCache.has(src)){var img=new Image();img.onerror=function(){galleryCache.delete(src)};img.src=src;galleryCache.set(src,img)}}
+function show(i){if(!LBL.length)return;cur=(i+LBL.length)%LBL.length;lbi.src=LBL[cur].src;lbi.alt=LBL[cur].alt;document.getElementById("cnt").textContent=(cur+1)+" / "+LBL.length;warm(cur+1);warm(cur-1)}
 void 0;void 0;void 0;
 void 0;
 void 0;
