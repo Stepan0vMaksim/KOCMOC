@@ -212,7 +212,7 @@ pzFit();
 // плавная прокрутка к разделам
 document.addEventListener("click",function(e){
   var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;
-  var id=a.getAttribute("href").slice(1);e.preventDefault();
+  var id=a.getAttribute("href").slice(1);if(id==="admin"){if(location.hash==="#admin")activateAdmin();return}e.preventDefault();
   var el=(id&&id!=="top")?document.getElementById(id):null;
   if(el)el.scrollIntoView({behavior:"smooth"});else window.scrollTo({top:0,behavior:"smooth"});
 });
@@ -584,7 +584,7 @@ document.addEventListener("click",function(e){
   var x=e.target.closest&&e.target.closest("[data-page-close]");if(x){e.preventDefault();closePage();return}
   var b=e.target.closest&&e.target.closest("[data-page]");if(b){e.preventDefault();go(b.dataset.page);return}
   var a=e.target.closest&&e.target.closest('a[href^="#"]');
-  if(a&&g("home").hidden){var id=a.getAttribute("href").slice(1);e.preventDefault();e.stopImmediatePropagation();if(PG.indexOf(id)>-1&&id!=="trainer"){go(id);return}go("home");setTimeout(function(){var el=id&&g(id);if(el)el.scrollIntoView({behavior:"smooth"})},60)}
+  if(a&&g("home").hidden){var id=a.getAttribute("href").slice(1);if(id==="admin")return;e.preventDefault();e.stopImmediatePropagation();if(PG.indexOf(id)>-1&&id!=="trainer"){go(id);return}go("home");setTimeout(function(){var el=id&&g(id);if(el)el.scrollIntoView({behavior:"smooth"})},60)}
 },true);
 route();
 
