@@ -2,7 +2,7 @@
 const clone=value=>JSON.parse(JSON.stringify(value));
 document.addEventListener('error',e=>{
  const img=e.target;
- if(!(img instanceof HTMLImageElement)||!img.src.includes('/assets/content/')||Number(img.dataset.loadRetry)>=2)return;
+ if(!(img instanceof HTMLImageElement)||!(/\/assets\/(content|uploads)\//.test(img.src))||Number(img.dataset.loadRetry)>=2)return;
  const n=Number(img.dataset.loadRetry||0)+1;
  img.dataset.loadRetry=String(n);
  setTimeout(()=>{const url=new URL(img.src);url.searchParams.set('retry',String(n));img.src=url.href;},n*400);
