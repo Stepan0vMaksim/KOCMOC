@@ -10,6 +10,7 @@
 #cms-admin .cms-actions button{flex:0 0 auto;min-height:42px}
 #cms-admin button.primary{border-color:#ffc629;box-shadow:0 2px 12px #ffc62955}
 #cms-admin button.add{border-color:#ffc629;background:#332505;color:#ffe494;font-weight:700}
+#cms-admin button.history:not(:disabled){border-color:#ffc629;background:#302505;color:#ffe494;font-weight:700!important}
 #cms-admin button.danger{border-color:#d97777;background:#381c29;color:#ffd6d6}
 #cms-admin button:not(:disabled):hover{filter:brightness(1.18)}
 #cms-admin main>button.add,#cms-admin details>button.add{margin:8px 0 14px}
